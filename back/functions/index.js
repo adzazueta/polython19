@@ -26,7 +26,21 @@ exports.signUp = functions.https.onRequest((req, res) => {
     password: pass
   })
   .then(userRecord => {
-    return res.send({ message: `User ${email} created, id: ${userRecord.uid}` });
+    return admin.database().ref('/usersDetail').push({
+      uid: userRecord.uid,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      countryCode: req.body.countryCode,
+      phoneNumber: req.body.phoneNumber,
+      accountType: req.body.accountType,
+      taxpayerNum: req.body.taxpayerNum
+    })
+      .then(snapshot => {
+        return res.send({ message: snapshot });
+      })
+      .catch(error => {
+        return res.send({ message: error });
+      });
   })
   .catch(error => {
     return res.send({ error: `Error creating the new user: ${error}` });
@@ -69,6 +83,24 @@ exports.signOut = functions.https.onRequest((req, res) => {
     .catch(error => {
       return res.send({ message: error });
     });
+  return 1;
+});
+
+exports.getUserData = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  admin.auth().getUser(req.body.uid)
+    .then(userRecord => {
+      return res.send({ message: userRecord.toJSON() });
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    })
   return 1;
 });
 
