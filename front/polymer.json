@@ -3,8 +3,8 @@
   "shell": "src/redde-app.html",
   "fragments": [
     "src/redde-login.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
+    "src/redde-business-dashboard.html",
+    "src/redde-customer-dashboard.html",
     "src/my-view404.html"
   ],
   "sources": [

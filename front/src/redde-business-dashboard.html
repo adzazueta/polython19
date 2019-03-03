@@ -17,19 +17,81 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
+      }
 
-        padding: 10px;
+      paper-dialog {
+        min-width: 80vw;
+      }
+
+      paper-dropdown-menu {
+        width: 100%;
+      }
+
+      redde-sum {
+        margin-top: 25px;
       }
     </style>
 
+
+    <paper-tabs selected="{{businessTab}}" attr-for-selected="name" role="navigation">
+      <dom-repeat items="[[businessTabs]]">
+        <template>
+          <paper-tab name="[[item.id]]">[[item.name]]</paper-tab>
+        </template>
+      </dom-repeat>
+    </paper-tabs>
+
     <div class="wrapper">
-      <h1>Generate new cart</h1>
+      <iron-pages
+        selected="{{businessTab}}"
+        attr-for-selected="name">
+        <div name="cards">
+          <h1>Generate new cart</h1>
+          <paper-dropdown-menu label="Dinosaurs" value="{{cart.product}}">
+            <paper-listbox slot="dropdown-content" selected="1">
+              <paper-item>Product 1</paper-item>
+              <paper-item>Product 2</paper-item>
+              <paper-item>Product 3</paper-item>
+              <paper-item>Product 4</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          <paper-input label="Cantidad" value="{{cart.quantity}}"></paper-input>
+          <redde-sum label="Total" amount="$50.34"></redde-sum>
+          <paper-button>Leer código</paper-button>
+        </div>
+  
+        <div name="transactions">
+          <redde-list-item list="[[transactions]]"></redde-list-item>
+        </div>
+
+        <div name="stock">
+          <redde-list-item list="[[products]]"></redde-list-item>
+        </div>
+
+        <div name="settings">
+          <redde-list-item list="[[settings]]"></redde-list-item>
+        </div>
+      </iron-pages>
     </div>
 
     <paper-dialog id="registerAccount" class="modal">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h2>Registre su cuenta</h2>
+      <paper-input label="Razón social" value="{{account.businessName}}"></paper-input>
+      <paper-input label="Dirección fiscal" value="{{account.taxResidence}}"></paper-input>
+      <paper-input label="Código postal" value="{{account.zipCode}}"></paper-input>
+      <paper-input label="Banco" value="{{account.bank}}"></paper-input>
       <div class="buttons">
-        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+        <paper-button on-click="closeAccountForm" autofocus>Save</paper-button>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="registerProduct" class="modal">
+      <h2>Registre un producto</h2>
+      <paper-input label="Nombre del producto" value="{{product.productName}}"></paper-input>
+      <paper-input label="Precio unitario" value="{{product.price}}"></paper-input>
+      <paper-input label="Breve descripción" value="{{product.description}}"></paper-input>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Save</paper-button>
       </div>
     </paper-dialog>
   </template>
@@ -46,6 +108,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           firstLogin: {
             type: Boolean,
             value: true
+          },
+
+          cart: {
+            type: Object,
+            value: {}
+          },
+
+          totalAmount: {
+            type: Number,
+            value: 34.22
+          },
+
+          businessTabs: {
+            type: Array,
+            value: [
+              { id: 'cards', name: 'Cuentas' },
+              { id: 'transactions', name: 'Transacciones' },
+              { id: 'stock', name: 'Stock' },
+              { id: 'settings', name: 'Configuraciones'}
+            ]
+          },
+
+          transactions: {
+            type: Array,
+            value: [
+              { name: 'Hola', description: 'A product', amount: '$34.66' },
+              { name: 'Hola', description: 'A product', amount: '$986.22'  },
+              { name: 'Hola', description: 'A product', amount: '$98.23' },
+              { name: 'Hola', description: 'A product', amount: '$2,100.00'  }
+            ]
+          },
+
+          products: {
+            type: Array,
+            value: [
+              { name: 'Celular', description: 'A product', amount: '$12,000.00' },
+              { name: 'Ropa', description: 'A product', amount: '$950.00'  },
+              { name: 'Reloj', description: 'A product', amount: '$7,530.50' },
+              { name: 'Tenis', description: 'A product', amount: '$1200,30.00'  }
+            ]
+          },
+
+          settings: {
+            type: Array,
+            value: [
+              { name: 'Editar cuentas', amount: '>' },
+              { name: 'Editar información', amount: '>'  },
+              { name: 'Salir', amount: '' }
+            ]
           }
         };
       }
@@ -59,9 +170,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super.connectedCallback();
       
         if (this.firstLogin) {
-          console.log('hola mundo');
           this.shadowRoot.querySelector('#registerAccount').open();
         }
+      }
+
+      closeAccountForm() {
+        this.shadowRoot.querySelector('#registerAccount').close();
+        this.shadowRoot.querySelector('#registerProduct').open();
       }
     }
 

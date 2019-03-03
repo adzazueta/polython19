@@ -1,0 +1,96 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="redde-customer-dashboard">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      google-map {
+        height: 200px;
+      }
+    </style>
+
+    <paper-tabs selected="{{customerTab}}" attr-for-selected="name" role="navigation">
+      <dom-repeat items="[[customerTabs]]">
+        <template>
+          <paper-tab name="[[item.id]]">[[item.name]]</paper-tab>
+        </template>
+      </dom-repeat>
+    </paper-tabs>
+
+
+    <iron-pages
+      selected="{{customerTab}}"
+      attr-for-selected="name">
+      <div name="cards" class="wrapper">
+        <redde-list-item list="[[cards]]"></redde-list-item>
+      </div>
+      <div name="map">
+        <google-map fit-to-markers api-key="AAIzaSyD3E1D9b-Z7ekrT3tbhl_dy8DCXuIuDDRc"></google-map>
+      </div>
+      
+      <div name="settings" class="wrapper">
+        <redde-list-item list="[[settings]]"></redde-list-item>
+      </div>
+    </iron-pages>
+    
+  </template>
+
+  <script>
+    class ReddeCustomerDashboard extends Polymer.Element {
+      static get is() { return 'redde-customer-dashboard'; }
+
+      /**
+        * Object describing property-related metadata used by Polymer features
+        */
+      static get properties() {
+        return {
+          customerTabs: {
+            type: Array,
+            value: [
+              {id: 'cards', name: 'Tarjetas'},
+              {id: 'map', name: 'Mapa'},
+              {id: 'settings', name: 'Configuración'}
+            ]
+          },
+
+          cards: {
+            type: Array,
+            value: [
+              { icon: 'credit-card', name: 'Hola', description: 'A product', amount: 'Bancomer' },
+              { icon: 'credit-card', name: 'Hola', description: 'A product', amount: 'Bancomer'  },
+              { icon: 'credit-card', name: 'Hola', description: 'A product', amount: 'Santander' },
+              { icon: 'credit-card', name: 'Hola', description: 'A product', amount: 'Banorte'  }
+            ]
+          },
+
+          settings: {
+            type: Array,
+            value: [
+              { name: 'Actividad', amount: '>' },
+              { name: 'Editar tarjetas', amount: '>'  },
+              { name: 'Editar información', amount: '>' },
+              { name: 'Salir', amount: ''  }
+            ]
+          }
+        };
+      }
+    }
+
+    window.customElements.define(ReddeCustomerDashboard.is, ReddeCustomerDashboard);
+  </script>
+</dom-module>
