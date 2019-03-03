@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<dom-module id="redde-sum">
+  <template>
+    <style>
+      :host {
+        display: block
+      }
+
+      .wrapper {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #eeeeee;
+        padding-bottom: 10px;
+      }
+    </style>
+
+    <div class="wrapper">
+      <div>[[label]]</div>
+      <div>[[amount]]</div>
+    </div>
+
+  </template>
+
+  <script>
+    /**
+     * `redde-sum` Description
+     *
+     * @summary ShortDescription.
+     * @customElement
+     * @polymer
+     * @extends {Polymer.Element}
+     */
+    class ReddeSum extends Polymer.Element {
+      /**
+       * String providing the tag name to register the element under.
+       */
+      static get is() {
+        return 'redde-sum';
+      }
+
+      /**
+       * Object describing property-related metadata used by Polymer features
+       */
+      static get properties() {
+        return {
+          label: String,
+          amount: String
+        };
+      }
+    }
+
+    window.customElements.define(ReddeSum.is, ReddeSum);
+  </script>
+</dom-module>

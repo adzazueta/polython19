@@ -30,11 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/redde-list-item/redde-list-item.html">
+<link rel="import" href="../bower_components/redde-product-item/redde-product-item.html">
+<link rel="import" href="../bower_components/web-animations-js/web-animations-next.min.html">
+<link rel="import" href="redde-sum.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="redde-login.html">
 <link rel="lazy-import" href="redde-business-dashboard.html">
-<link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="redde-customer-dashboard.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="redde-app">
@@ -96,8 +100,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="login" href="[[rootPath]]login">Login</a>
-          <a name="business-dashboard" href="[[rootPath]]business-dashboard">Dashboard</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
+          <a name="business-dashboard" href="[[rootPath]]business-dashboard">Business</a>
+          <a name="customer-dashboard" href="[[rootPath]]customer-dashboard">Customer</a>
         </iron-selector>
       </app-drawer>
 
@@ -109,18 +113,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>[[localize('title')]]Redde</div>
           </app-toolbar>
-
-          <dom-if if="[[_shouldRenderTabs]]">
-            <template>
-              <app-toolbar class="tabs-bar" hidden>
-                <paper-tabs selected="{{selected}}" attr-for-selected="name">
-                  <template is="dom-repeat" items="[[tabs]]">
-                    <paper-tab name$="{{item}}">{{item}}</paper-tab>
-                  </template>
-                </paper-tabs>
-              </app-toolbar>
-            </template>
-          </dom-if>
         </app-header>
 
         <iron-pages
@@ -130,7 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             role="main">
           <redde-login name="login"></redde-login>
           <redde-business-dashboard name="business-dashboard"></redde-business-dashboard>
-          <my-view3 name="view3"></my-view3>
+          <redde-customer-dashboard name="customer-dashboard"></redde-customer-dashboard>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -167,12 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: 'es'
           },
 
-          resources: Array,
-
-          _shouldRenderTabs: {
-            type: Boolean,
-            computed: '_computeShouldRenderTabs(page)'
-          }
+          resources: Array
         };
       }
 
@@ -216,10 +203,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showPage404() {
         this.page = 'view404';
-      }
-
-      _computeShouldRenderTabs(page) {
-        return page !== 'login';
       }
     }
 

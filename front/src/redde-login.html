@@ -21,24 +21,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
+    <iron-ajax
+      id="singInAjax"
+      url="https://us-central1-redde-df785.cloudfunctions.net/signIn"
+      method="POST"
+      content-type="application/json"
+      handle-as="json"
+      on-response="handleSign">
+    </iron-ajax>
+
+    <iron-ajax
+      id="singUpAjax"
+      url="https://us-central1-redde-df785.cloudfunctions.net/signUp"
+      method="POST"
+      content-type="application/json"
+      handle-as="json"
+      on-response="handleSign">
+    </iron-ajax>
+
+    <iron-ajax
+      auto
+      id="qrAjax"
+      url="http://api.qrserver.com/v1/create-qr-code/?data=hola!&size=100x100"
+      method="POST"
+      content-type="application/json"
+      handle-as="json"
+      on-response="handleResponse">
+    </iron-ajax>
+
     <div class="wrapper">
       <h1>Iniciar sesión</h1>
 
       <dom-if if="[[!signUpEnabled]]">
         <template>
-          <paper-input label="Email"></paper-input>
-          <paper-input label="Contraseña" type="password"></paper-input>
-          <paper-button>Registrarse</paper-button>
-          <p>¿No tienes una cuenta? <span class="underlined" on-click="signUp">Resgístrate</span></p>
+          <paper-input label="Email" value="{{signin.email}}"></paper-input>
+          <paper-input label="Contraseña" type="password" value="{{signin.password}}"></paper-input>
+          <paper-button on-click="signInTapped">Entrar</paper-button>
+          <p>¿No tienes una cuenta? <span class="underlined" on-click="signUpSelec">Regístrate</span></p>
         </template>
       </dom-if>
 
       <dom-if if="[[signUpEnabled]]">
         <template>
           <paper-input label="Nombre"></paper-input>
-          <paper-input label="Email"></paper-input>
+          <paper-input label="Email" value="{{signup.email}}"></paper-input>
           <paper-input label="Teléfono"></paper-input>
-          <paper-input label="Crea una contraseña" type="password"></paper-input>
+          <paper-input label="Crea una contraseña" type="password" value="{{signup.password}}"></paper-input>
           
           <paper-radio-group on-paper-radio-group-changed="enterpriseSelec">
             <paper-radio-button class="item" name="common">Cuenta común</paper-radio-button>
@@ -50,6 +78,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-input label="RFC"></paper-input>
             </template>
           </dom-if>
+
+          <paper-button on-click="signUpTapped">Registrarse</paper-button>
+          <p>¿Ya tienes una cuenta? <span class="underlined" on-click="signUpSelec">Inicia sesión</span></p>
         </template>
       </dom-if>
 
@@ -74,17 +105,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           enterpriseSelected: {
             type: Boolean,
             value: false
+          },
+
+          signin: {
+            type: Object,
+            value: {}
+          },
+
+          signup: {
+            type: Object,
+            value: {}
           }
         };
       }
 
-      signUp() {
-        this.set('signUpEnabled', true);
+      signUpSelec() {
+        this.set('signUpEnabled', !this.signUpEnabled);
       }
 
-      enterpriseSelec() {
-        this.set('enterpriseSelected', true);
+      enterpriseSelec(e) {
+        this.set('enterpriseSelected', !this.enterpriseSelected);
       }
+
+      signInTapped() {
+        this.$.singInAjax.body = this.signin;
+        this.$.singInAjax.generateRequest();
+        this.set('signin', {});
+      }
+
+      signUpTapped() {
+        this.$.singUpAjax.body = this.signup;
+        this.$.singUpAjax.generateRequest();
+        this.set('signup', {});
+      }
+
+      handleSign() {
+        console.log('as');
+        window.location = 'business-dashboard';
+        //window.location = 'customer-dashboard';
+      }
+
+      handleResponse(e){
+        console.log('sjbdasjbdn', e);
+      } 
     }
 
     window.customElements.define(ReddeLogin.is, ReddeLogin);
