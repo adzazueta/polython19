@@ -112,13 +112,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <dom-if if="[[_shouldRenderTabs]]">
             <template>
-              <app-toolbar class="tabs-bar" hidden>
+              <!-- <app-toolbar class="tabs-bar" hidden>
                 <paper-tabs selected="{{selected}}" attr-for-selected="name">
                   <template is="dom-repeat" items="[[tabs]]">
                     <paper-tab name$="{{item}}">{{item}}</paper-tab>
                   </template>
                 </paper-tabs>
-              </app-toolbar>
+              </app-toolbar> -->
             </template>
           </dom-if>
         </app-header>
@@ -157,11 +157,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
-
-          tabs: {
-            type: Array,
-            value: [ 'hola', 'mundo' ]
-          },
 
           language: {
             value: 'es'

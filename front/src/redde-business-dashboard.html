@@ -11,21 +11,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 
 <dom-module id="redde-business-dashboard">
   <template>
     <style include="shared-styles">
       :host {
-        display: block;
+        --app-primary-color: #072146;
+        --app-secondary-color: black;
 
+        display: block;
         padding: 10px;
       }
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
     </style>
-
-    <div class="wrapper">
-      <h1>Generate new cart</h1>
-    </div>
-
+    <app-header slot="header" condenses reveals effects="waterfall">
+    <app-toolbar class="tabs-bar">
+      <paper-tabs selected="{{selected}}" attr-for-selected="name">
+        <template is="dom-repeat" items="[[tabs]]">
+          <paper-tab name$="{{item}}">{{item}}</paper-tab>
+        </template>
+      </paper-tabs>
+    </app-toolbar>
+  </app-header>
+    <iron-pages selected="[[selected]]" attr-for-selected="page-name" fallback-selection="fallback">
+      <div page-name="HOLA">HOLA</div>
+      <div page-name="MUNDO">MUNDO</div>
+    </iron-pages>
     <paper-dialog id="registerAccount" class="modal">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       <div class="buttons">
@@ -46,6 +64,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           firstLogin: {
             type: Boolean,
             value: true
+          },
+          tabs: {
+            type: Array,
+            value: [ 'HOLA', 'MUNDO' ]
           }
         };
       }
