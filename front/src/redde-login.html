@@ -1,0 +1,92 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="redde-login">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="wrapper">
+      <h1>Iniciar sesión</h1>
+
+      <dom-if if="[[!signUpEnabled]]">
+        <template>
+          <paper-input label="Email"></paper-input>
+          <paper-input label="Contraseña" type="password"></paper-input>
+          <paper-button>Registrarse</paper-button>
+          <p>¿No tienes una cuenta? <span class="underlined" on-click="signUp">Resgístrate</span></p>
+        </template>
+      </dom-if>
+
+      <dom-if if="[[signUpEnabled]]">
+        <template>
+          <paper-input label="Nombre"></paper-input>
+          <paper-input label="Email"></paper-input>
+          <paper-input label="Teléfono"></paper-input>
+          <paper-input label="Crea una contraseña" type="password"></paper-input>
+          
+          <paper-radio-group on-paper-radio-group-changed="enterpriseSelec">
+            <paper-radio-button class="item" name="common">Cuenta común</paper-radio-button>
+            <paper-radio-button class="item" name="enterprise">Cuenta empresarial</paper-radio-button>
+          </paper-radio-group>
+
+          <dom-if if="[[enterpriseSelected]]">
+            <template>
+                <paper-input label="RFC"></paper-input>
+            </template>
+          </dom-if>
+        </template>
+      </dom-if>
+
+    </div>
+    
+  </template>
+
+  <script>
+    class ReddeLogin extends Polymer.Element {
+      static get is() { return 'redde-login'; }
+
+      /**
+        * Object describing property-related metadata used by Polymer features
+        */
+      static get properties() {
+        return {
+          signUpEnabled: {
+            type: Boolean,
+            value: false
+          },
+
+          enterpriseSelected: {
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+
+      signUp() {
+        this.set('signUpEnabled', true);
+      }
+
+      enterpriseSelec() {
+        this.set('enterpriseSelected', true);
+      }
+    }
+
+    window.customElements.define(ReddeLogin.is, ReddeLogin);
+  </script>
+</dom-module>
