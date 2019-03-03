@@ -86,42 +86,6 @@ exports.signOut = functions.https.onRequest((req, res) => {
   return 1;
 });
 
-exports.getUserData = functions.https.onRequest((req, res) => {
-  res.header('Content-Type','application/json');
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method !== "POST") {
-    return res.status(500).send("What are you trying baby?");
-  }
-  admin.auth().getUser(req.body.uid)
-    .then(userRecord => {
-      return res.send({ message: userRecord.toJSON() });
-    })
-    .catch(error => {
-      return res.send({ message: error });
-    })
-  return 1;
-});
-
-exports.addBusinessAccount = functions.https.onRequest((req, res) => {
-  res.header('Content-Type','application/json');
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  
-  if (req.method !== "POST") {
-    return res.status(500).send("What are you trying baby?");
-  }
-  const data = req.body.data;
-  return admin.database().ref('/businessAccount').push({ data })
-    .then(snapshot => {
-      return res.send({ message: snapshot });
-    })
-    .catch(error => {
-      return res.send({ message: error });
-    });
-});
-
 exports.addBusinessAccount = functions.https.onRequest((req, res) => {
   res.header('Content-Type','application/json');
   res.header('Access-Control-Allow-Origin', '*');
