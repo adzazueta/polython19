@@ -1,0 +1,22 @@
+{
+  "name": "polython-api",
+  "version": "1.0.0",
+  "description": "An API for polython project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexis D. Zazueta",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "firebase": "^5.8.5",
+    "firebase-admin": "^7.0.0",
+    "jwt-simple": "^0.5.5",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
