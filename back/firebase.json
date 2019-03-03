@@ -11,6 +11,10 @@
         "function": "/url"
         }]
       }
+    },
+    "rules": {
+      ".read": true,
+      ".write": true
     }
   }
 }
