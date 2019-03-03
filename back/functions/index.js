@@ -11,6 +11,10 @@ admin.initializeApp({
 firebase.initializeApp(config.firebase);
 
 exports.signUp = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method !== "POST") {
     return res.status(500).send("What are you trying baby?");
   }
@@ -31,6 +35,10 @@ exports.signUp = functions.https.onRequest((req, res) => {
 });
 
 exports.signIn = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method !== "POST") {
     return res.status(500).send("What are you trying baby?");
   }
@@ -47,6 +55,10 @@ exports.signIn = functions.https.onRequest((req, res) => {
 });
 
 exports.signOut = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
   if (req.method !== "POST") {
     return res.status(500).send("What are you trying baby?");
   }
