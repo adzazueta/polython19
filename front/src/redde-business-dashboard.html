@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="redde-business-dashboard">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="wrapper">
+      <h1>Generate new cart</h1>
+    </div>
+
+    <paper-dialog id="registerAccount" class="modal">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <script>
+    class ReddeBusinessDashboard extends Polymer.Element {
+      static get is() { return 'redde-business-dashboard'; }
+
+      /**
+        * Object describing property-related metadata used by Polymer features
+        */
+      static get properties() {
+        return {
+          firstLogin: {
+            type: Boolean,
+            value: true
+          }
+        };
+      }
+
+      /**
+        * Called every time the element is inserted into the DOM. Useful for 
+        * running setup code, such as fetching resources or rendering.
+        * Generally, you should try to delay work until this time.
+        */
+      connectedCallback() {
+        super.connectedCallback();
+      
+        if (this.firstLogin) {
+          console.log('hola mundo');
+          this.shadowRoot.querySelector('#registerAccount').open();
+        }
+      }
+    }
+
+    window.customElements.define(ReddeBusinessDashboard.is, ReddeBusinessDashboard);
+  </script>
+</dom-module>
