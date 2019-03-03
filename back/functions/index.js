@@ -71,3 +71,67 @@ exports.signOut = functions.https.onRequest((req, res) => {
     });
   return 1;
 });
+
+exports.addBusinessAccount = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  const data = req.body.data;
+  return admin.database().ref('/businessAccount').push({ data })
+    .then(snapshot => {
+      return res.send({ message: snapshot });
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    });
+});
+
+exports.addBusinessAccount = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  return admin.database().ref('/businessAccounts').push({
+    accountNum: req.body.accountNum,
+    businessName: req.body.businessName,
+    taxResidence: req.body.taxResidence,
+    bank: req.body.bank,
+    zipCode: req.body.zipCode,
+    uid: req.body.uid
+  })
+    .then(snapshot => {
+      return res.send({ message: snapshot });
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    });
+});
+
+exports.addProductToStock = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  return admin.database().ref('/stock').push({
+    productName: req.body.productName,
+    price: req.body.price,
+    image: req.body.image,
+    description: req.body.description
+  })
+    .then(snapshot => {
+      return res.send({ message: snapshot });
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    })
+});
