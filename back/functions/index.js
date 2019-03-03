@@ -56,9 +56,7 @@ exports.signIn = functions.https.onRequest((req, res) => {
   if (req.method !== "POST") {
     return res.status(500).send("What are you trying baby?");
   }
-  const email = req.body.email;
-  const pass = req.body.pass;
-  firebase.auth().signInWithEmailAndPassword(email, pass)
+  firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.pass)
     .then(userRecord => {
       return res.send({ message: userRecord });
     })
@@ -119,6 +117,7 @@ exports.addProductToStock = functions.https.onRequest((req, res) => {
     return res.status(500).send("What are you trying baby?");
   }
   return admin.database().ref('/stock').push({
+    uid: req.body.uid,
     productName: req.body.productName,
     price: req.body.price,
     image: req.body.image,
@@ -130,4 +129,56 @@ exports.addProductToStock = functions.https.onRequest((req, res) => {
     .catch(error => {
       return res.send({ message: error });
     })
+});
+
+exports.addCard = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  return admin.database().ref('/cards').push({
+    uid: req.body.uid,
+    cardName: req.body.cardName,
+    cardNum: req.body.cardNum,
+    cardType: req.body.cardType,
+    expirationDate: req.body.expirationDate,
+    cardCvv: req.body.cardCvv
+  })
+    .then(snapshot => {
+      return res.send({ message: snapshot });
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    })
+});
+
+exports.transaction = functions.https.onRequest((req, res) => {
+  res.header('Content-Type','application/json');
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method !== "POST") {
+    return res.status(500).send("What are you trying baby?");
+  }
+  firebase.database().ref(`cards/${req.body.cardId}`).once('value')
+    .then(snapshot => {
+      return admin.database().ref('/transactions').push({
+        from: snapshot.uid,
+        to: req.body.uid,
+        total: req.body.total
+      })
+        .then(snap => {
+          return res.send({ message: snap });
+        })
+        .catch(error => {
+          return res.send({ message: error });
+        })
+    })
+    .catch(error => {
+      return res.send({ message: error });
+    });
+  return 1;
 });
