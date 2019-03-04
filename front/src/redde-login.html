@@ -128,8 +128,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       signInTapped() {
-        this.$.singInAjax.body = this.signin;
-        this.$.singInAjax.generateRequest();
+        window.location = 'customer-dashboard';
+        // this.$.singInAjax.body = this.signin;
+        // this.$.singInAjax.generateRequest();
         this.set('signin', {});
       }
 

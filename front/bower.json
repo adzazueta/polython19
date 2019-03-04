@@ -16,6 +16,8 @@
     "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
     "paper-button": "PolymerElements/paper-button#^2.0.0",
     "paper-dialog": "PolymerElements/paper-dialog#^2.0.0",
+    "paper-progress": "PolymerElements/paper-progress#^2.0.0",
+    "iron-image": "PolymerElements/iron-image#^2.0.0",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#2.0.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#2.0.0",
@@ -27,6 +29,8 @@
     "app-localize-behavior": "PolymerElements/app-localize-behavior#^2.0.0",
     "redde-product-item": "https://github.com/Xhiomi/Polymer-component.git",
     "redde-list-item": "https://github.com/Xhiomi/Polymer-component-dom-repeat.git",
+    "polymerfire": "firebase/polymerfire#^2.2.1",
+    "polymer-firebase-uploader": "https://github.com/uuzii/polymer-firebase-uploader.git",
     "neon-animation": "PolymerElements/neon-animation#^2.0.1",
     "web-animations-js": "^2.3.1",
     "google-map": "GoogleWebComponents/google-map#^2.0.5"

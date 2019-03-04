@@ -32,7 +32,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </dom-repeat>
     </paper-tabs>
 
-
     <iron-pages
       selected="{{customerTab}}"
       attr-for-selected="name">
@@ -44,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       
       <div name="settings" class="wrapper">
-        <redde-list-item list="[[settings]]"></redde-list-item>
+        <redde-list-item list="[[settings]]" on-product-selected-inform="goToAccountDetail"></redde-list-item>
       </div>
     </iron-pages>
     
@@ -88,6 +87,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             ]
           }
         };
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is
+       * initialized.
+       */
+      ready() {
+        super.ready();
+        
+        this.addEventListener('product-selected-inform', () => {
+          console.log('BIG METRA');
+        });
+      }
+
+      goToAccountDetail(e) {
+        console.log('KWJBDNWBFDKJWBDKJWBD', e);
       }
     }
 

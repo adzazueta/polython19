@@ -33,12 +33,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/redde-list-item/redde-list-item.html">
 <link rel="import" href="../bower_components/redde-product-item/redde-product-item.html">
 <link rel="import" href="../bower_components/web-animations-js/web-animations-next.min.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/polymer-firebase-uploader/polymer-firebase-uploader.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="redde-sum.html">
 <link rel="import" href="my-icons.html">
 
 <link rel="lazy-import" href="redde-login.html">
 <link rel="lazy-import" href="redde-business-dashboard.html">
 <link rel="lazy-import" href="redde-customer-dashboard.html">
+<link rel="lazy-import" href="redde-account-detail.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <dom-module id="redde-app">
@@ -87,6 +92,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         url-space-regex="^[[rootPath]]">
     </app-location>
 
+    <firebase-app
+      auth-domain="redde-df785.firebaseapp.com"
+      database-url="https://redde-df785.firebaseio.com/"
+      api-key="AIzaSyDac6ocoFs91dFtNZRqUZY8_wWHKY91b5I"
+      storage-bucket="redde-df785.appspot.com"
+      messaging-sender-id="1078463867450"></firebase-app>
+
     <app-route
         route="{{route}}"
         pattern="[[rootPath]]:page"
@@ -123,6 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <redde-login name="login"></redde-login>
           <redde-business-dashboard name="business-dashboard"></redde-business-dashboard>
           <redde-customer-dashboard name="customer-dashboard"></redde-customer-dashboard>
+          <redde-account-detail name="account-detail"></redde-account-detail>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -149,11 +162,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
-
-          tabs: {
-            type: Array,
-            value: [ 'hola', 'mundo' ]
-          },
 
           language: {
             value: 'es'

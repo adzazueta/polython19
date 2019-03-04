@@ -46,18 +46,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         selected="{{businessTab}}"
         attr-for-selected="name">
         <div name="cards">
-          <h1>Generate new cart</h1>
-          <paper-dropdown-menu label="Dinosaurs" value="{{cart.product}}">
-            <paper-listbox slot="dropdown-content" selected="1">
-              <paper-item>Product 1</paper-item>
-              <paper-item>Product 2</paper-item>
-              <paper-item>Product 3</paper-item>
-              <paper-item>Product 4</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-          <paper-input label="Cantidad" value="{{cart.quantity}}"></paper-input>
-          <redde-sum label="Total" amount="$50.34"></redde-sum>
-          <paper-button>Leer código</paper-button>
+          <template is="dom-if" if="[[!imageUploaded]]">
+            <h1>Generar nuevo cargo</h1>
+            <paper-dropdown-menu label="Dinosaurs" value="{{cart.product}}">
+              <paper-listbox slot="dropdown-content" selected="1">
+                <paper-item>Product 1</paper-item>
+                <paper-item>Product 2</paper-item>
+                <paper-item>Product 3</paper-item>
+                <paper-item>Product 4</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-input label="Cantidad" value="{{cart.quantity}}"></paper-input>
+            <redde-sum label="Total" amount="$50.34"></redde-sum>
+            <paper-button>Leer código</paper-button>
+  
+            <polymer-firebase-uploader
+              folder-name="qrs"
+              on-image-url-settled="setImageUrl"
+              image-name="QRcode"></polymer-firebase-uploader>
+          </template>
+          
+          <template is="dom-if" if="[[imageUploaded]]">
+            <h2>Pago aceptado</h2>
+            <iron-icon height="200px" width="200px" icon="credit-card"></iron-icon>
+          </template>
         </div>
   
         <div name="transactions">
@@ -120,6 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: 34.22
           },
 
+          imageUploaded: {
+            type: Boolean,
+            value: false
+          },
+
           businessTabs: {
             type: Array,
             value: [
@@ -177,6 +194,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       closeAccountForm() {
         this.shadowRoot.querySelector('#registerAccount').close();
         this.shadowRoot.querySelector('#registerProduct').open();
+      }
+
+      setImageUrl(e) {
+        setTimeout(() => {
+          this.set('imageUploaded', true);
+        }, 3000);
       }
     }
 

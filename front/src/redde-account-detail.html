@@ -1,0 +1,95 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="redde-account-detail">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block
+			}
+
+			.center {
+				text-align: center;
+			}
+
+			iron-icon {
+				width: 200px;
+				height: 200px;
+				margin-top: 20px;
+			}
+
+			redde-list-item {
+				margin-top: 20px;
+			}
+		</style>
+
+		<div class="wrapper center">
+			<iron-icon icon="my-icons:qr"></iron-icon>
+			<h1>Cuenta X</h1>
+			<p>BBVA Bancomer</p>
+		</div>
+
+		<div class="wrapper">
+			<redde-list-item list="[[transactions]]"></redde-list-item>
+		</div>
+
+	</template>
+
+	<script>
+		/**
+		 * `redde-account-detail` Description
+		 *
+		 * @summary ShortDescription.
+		 * @customElement
+		 * @polymer
+		 * @extends {Polymer.Element}
+		 */
+		class ReddeAccountDetail extends Polymer.Element {
+			/**
+			 * String providing the tag name to register the element under.
+			 */
+			static get is() {
+				return 'redde-account-detail';
+			}
+
+			/**
+			 * Object describing property-related metadata used by Polymer features
+			 */
+			static get properties() {
+				return {
+					transactions: {
+						type: Array,
+						value: [
+						{ name: 'Taxi', description: 'A product', amount: '$34.66' },
+						{ name: 'Restaurante', description: 'A product', amount: '$986.22'  },
+						{ name: 'Café', description: 'A product', amount: '$98.23' }
+						]
+					},
+				};
+			}
+
+			/**
+			 * Instance of the element is created/upgraded. Use: initializing state,
+			 * set up event listeners, create shadow dom.
+			 * @constructor
+			 */
+			constructor() {
+				super();
+			}
+
+			/**
+			 * Use for one-time configuration of your component after local DOM is initialized. 
+			 */
+			ready() {
+				super.ready();
+
+				Polymer.RenderStatus.afterNextRender(this, function() {
+					
+				});
+			}
+
+		}
+
+		window.customElements.define(ReddeAccountDetail.is, ReddeAccountDetail);
+	</script>
+</dom-module>
